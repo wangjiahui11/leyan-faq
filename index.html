@@ -104,8 +104,8 @@ const DATA = [
 ③ 老师如何引导孩子理解关键词：通过 TPR 肢体语言、大量举例说明、图片解释。比如理解 empty：先给孩子看图片，再找教室里的空垃圾桶、空笔盒造句，最后回到视频中提问检测，或引导孩子自己造句。
 
 ④ 不能脱离语境理解单词：句子是最小的语义单位，要根据上下文推测单词含义。孩子需要在不同场景下理解单词（一词多义很常见）：book 作名词是「书本」，作动词是「预定」；watch 作名词是「手表」，作动词是「注视」。脱离语境翻译，很可能闹笑话。`,
-  imgs:[{src:"lion.png",after:1,cap:"原版思维：图片直接对应英文；翻译思维：图片→中文→英文，多绕一道弯"},
-        {src:"full-empty.png",after:3,cap:"先给孩子看 full / empty 的图，再回到教室里找实物造句"}]},
+  imgs:[{src:"https://wangjiahui11.github.io/leyan-faq/lion.png",after:1,cap:"原版思维：图片直接对应英文；翻译思维：图片→中文→英文，多绕一道弯"},
+        {src:"https://wangjiahui11.github.io/leyan-faq/full-empty.png",after:3,cap:"先给孩子看 full / empty 的图，再回到教室里找实物造句"}]},
 
  {n:"Q5 · 自然拼读学得不扎实，需要重新学一遍吗？", t:`① 没必要重复学，学 n 遍也没用！
 
@@ -136,7 +136,14 @@ DATA.forEach(it=>{
   const top=document.createElement('div'); top.className='qtop';
   const name=document.createElement('div'); name.className='qname'; name.textContent=it.n;
   const btn=document.createElement('button'); btn.className='copy'; btn.textContent='复制';
-  btn.onclick=()=>copyText(it.n+'\n\n'+it.t,btn);
+  btn.onclick=()=>{
+    let txt=it.n+'\n\n'+it.t;
+    if(it.imgs && it.imgs.length){
+      txt+='\n\n📷 配图查看：';
+      it.imgs.forEach(im=>{ txt+='\n· '+im.src; });
+    }
+    copyText(txt,btn);
+  };
   top.append(name,btn);
   const body=document.createElement('div'); body.className='abody';
   if(it.imgs && it.imgs.length){

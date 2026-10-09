@@ -1,0 +1,14 @@
+{
+  "name": "乐言成长中心 · 家长FAQ",
+  "short_name": "家长FAQ",
+  "description": "乐言成长中心家长常见问题：老师沟通答疑、一键复制转发",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#2f7cf6",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>乐言成长中心 · 家长FAQ</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2f7cf6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="家长FAQ">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2329; --sub:#8a9099;
+    --brand:#2f7cf6; --brand-d:#1f66d6; --line:#eceef1; --chip:#eef4fe;
+    --quote:#4a5568; --shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Helvetica,"Microsoft YaHei",sans-serif;
+    line-height:1.75;font-size:16px;}
+  header{background:#ffffff;border-bottom:1px solid var(--line);}
+  .hwrap{max-width:720px;margin:0 auto;padding:12px 14px 0;}
+  h1{font-size:18px;margin:2px 0 4px;}
+  .hint{font-size:12px;color:var(--sub);margin:0 0 10px;}
+  .search{display:block;width:100%;padding:10px 14px 4px;box-sizing:border-box;}
+  .search input{display:block;width:100%;height:42px;line-height:42px;margin:0;
+    border:1px solid #d8dce0;background:#f2f4f6;border-radius:21px;
+    padding:0 16px;font-size:16px;-webkit-appearance:none;appearance:none;box-sizing:border-box;}
+  .search input:focus{border-color:var(--brand);background:#fff;}
+  main{max-width:720px;margin:0 auto;padding:14px 14px 90px;}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);margin:0 0 12px;overflow:hidden;}
+  .qcard .qtop{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 14px;background:#fafbfc;border-bottom:1px dashed var(--line);}
+  .qcard .qname{font-size:15.5px;font-weight:600;line-height:1.5;}
+  .copy{flex:0 0 auto;border:none;background:var(--chip);color:var(--brand-d);font-size:13px;
+    font-weight:600;padding:6px 14px;border-radius:16px;cursor:pointer;white-space:nowrap;}
+  .copy:active{transform:scale(.95);}
+  .copy.ok{background:var(--brand);color:#fff;}
+  .qcard .abody{padding:12px 14px;font-size:15.5px;white-space:pre-wrap;word-break:break-word;
+    color:var(--quote);}
+  .aimg{display:block;max-width:100%;width:340px;margin:6px auto 10px;border-radius:10px;
+    border:1px solid var(--line);}
+  .about{background:var(--chip);border:1px solid #d7e5fc;border-radius:14px;
+    padding:12px 14px;font-size:14px;color:var(--quote);margin:0 0 14px;line-height:1.7;}
+  .about b{color:var(--ink);}
+  .empty{display:none;text-align:center;color:var(--sub);font-size:14px;padding:40px 0;}
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+    background:rgba(31,35,41,.92);color:#fff;font-size:14px;padding:9px 18px;border-radius:20px;
+    opacity:0;pointer-events:none;transition:all .25s;z-index:50;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media(min-width:760px){
+    body{font-size:16px;}
+    .qcard .abody{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <h1>乐言成长中心 · 家长常见问题</h1>
+    <p class="hint">3~12岁原版英语 · 老师沟通答疑用 · 长按或点「复制」即可转发给家长</p>
+  </div>
+  <div class="search"><input id="q" type="text" enterkeyhint="search" placeholder="搜索：字幕 / 录音 / 翻译 / 拼读…" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
+</header>
+<main id="main"></main>
+<div class="empty" id="empty">没有匹配内容，换个关键词试试</div>
+<div class="toast" id="toast">已复制，去粘贴吧 👍</div>
+
+<script>
+const ABOUT = `本页内容来自机构《家长常见问题FAQ》，供老师回复家长时参考。
+涉及请假、补课、续费、优惠等规则时，以机构最新政策为准。`;
+
+const DATA = [
+ {n:"Q1 · 为什么视频没有字幕？", t:`视频没有字幕，是特意这样设计的，主要有三个原因：
+
+① 视频学习是通过原版动画，让孩子在大量的语言场景中理解故事大意，积累词汇和句型。
+
+② 听说课的目的是锻炼孩子的听说能力，认读训练有专门的绘本阅读课来承担。
+
+③ 看字幕会让孩子产生文字依赖，变成「朗读字幕」，而不是靠耳朵去听。久而久之，作业就变成了字幕朗读，达不到跟读的效果，也无法完成下一步「看图复述」的要求。`},
+
+ {n:"Q2 · 为什么要听课堂录音？孩子不爱听、没时间磨耳朵", t:`① 听力的重要性：听力在英语学习中起到基石的作用，有大量听的输入，才会有口头的输出。听力带动阅读——年龄小的孩子不认字，通过听声音也能辅助认单词。听力是短期最难提升的能力，孩子年龄越小，耳朵越灵敏，所以前期学习中听力的积累至关重要。
+
+② 课堂录音的作用：在家里创造更多英文环境，同时复习课堂内容。
+
+③ 不听课堂录音的后果：久而久之无法听懂课堂，无法完成跟读复述作业，兴趣降低，形成恶性循环，最终跟不上。
+
+④ 听录音的方法：每天至少听 30 分钟，利用好零碎时间——吃饭、睡前、刷牙的时候放在旁边磨耳朵；也可以配一个听力机，随身携带。`},
+
+ {n:"Q3 · 我的孩子上课听懂了吗？", t:`① 如何判断听懂没：孩子在课堂上能回答老师的问题、做出相应的动作反馈，即为听懂（我们会分享课堂互动视频）。在家里能完成视频问答作业，说明理解了故事情节。
+
+② 一个常见误区：孩子在任何阶段都不可能 100% 听懂课堂内容，听懂是一个循序渐进的过程——孩子是用积累的已知去推测、理解新的知识。
+
+③ 家长可以这样做：想让孩子尽可能听懂和参与课堂，就要多听课堂录音、认真完成作业，并做好绘本的泛读。`},
+
+ {n:"Q4 · 孩子只会跟读，问意思不知道？翻译不出来？", t:`① 禁止用翻译检测：用翻译来检测孩子是否听懂，是不可取的。在全英文的课堂上我们不用中文解释单词，孩子自然不需要会翻译。而且翻译有害，不利于英文思维能力的培养。
+
+② 不需要逐词逐句解释：孩子只用理解大意。孩子能回答老师相关的提问，就是听懂了！
+
+③ 老师如何引导孩子理解关键词：通过 TPR 肢体语言、大量举例说明、图片解释。比如理解 empty：先给孩子看图片，再找教室里的空垃圾桶、空笔盒造句，最后回到视频中提问检测，或引导孩子自己造句。
+
+④ 不能脱离语境理解单词：句子是最小的语义单位，要根据上下文推测单词含义。孩子需要在不同场景下理解单词（一词多义很常见）：book 作名词是「书本」，作动词是「预定」；watch 作名词是「手表」，作动词是「注视」。脱离语境翻译，很可能闹笑话。`,
+  imgs:[{src:"lion.png",after:1,cap:"原版思维：图片直接对应英文；翻译思维：图片→中文→英文，多绕一道弯"},
+        {src:"full-empty.png",after:3,cap:"先给孩子看 full / empty 的图，再回到教室里找实物造句"}]},
+
+ {n:"Q5 · 自然拼读学得不扎实，需要重新学一遍吗？", t:`① 没必要重复学，学 n 遍也没用！
+
+② 拼读的作用：它是辅助工具，就像用拼音认汉字，但绝不是万能的。比如给孩子一段八股文，全部标注拼音，孩子可以读出来但不理解其意——同理，拼读规律只是服务孩子认读单词的。
+
+③ 局限性：拼读只能覆盖约 70% 的英语单词解码规则，还有 30% 的常见词不符合拼读规律。
+
+④ 如何正确运用拼读：需要在大量的阅读中练习拼读，而不是反复去学习拼读规则。它对拼写单词有一定帮助——记背单词时，要求孩子一边拼写、一边大声读出来，可以加强记忆。`},
+];
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+const main = document.getElementById('main');
+const toast = document.getElementById('toast');
+const qInput = document.getElementById('q');
+const emptyEl = document.getElementById('empty');
+
+// 顶部说明
+const about = document.createElement('div');
+about.className = 'about';
+about.innerHTML = '<b>使用说明</b><br>' + ABOUT.replace(/\n/g,'<br>');
+main.appendChild(about);
+
+// 渲染问答卡
+DATA.forEach(it=>{
+  const card=document.createElement('div'); card.className='qcard';
+  const top=document.createElement('div'); top.className='qtop';
+  const name=document.createElement('div'); name.className='qname'; name.textContent=it.n;
+  const btn=document.createElement('button'); btn.className='copy'; btn.textContent='复制';
+  btn.onclick=()=>copyText(it.n+'\n\n'+it.t,btn);
+  top.append(name,btn);
+  const body=document.createElement('div'); body.className='abody';
+  if(it.imgs && it.imgs.length){
+    // 按 ①②③④ 拆段，把图片插到对应序号段落之后
+    const paras=it.t.split(/\n\n+/);
+    const imgMap={};
+    it.imgs.forEach(im=>{ (imgMap[im.after]=imgMap[im.after]||[]).push(im); });
+    paras.forEach((p,idx)=>{
+      const seg=document.createElement('div');
+      seg.textContent=p;
+      if(idx>0) seg.style.marginTop='10px';
+      body.appendChild(seg);
+      const m=p.match(/^([①②③④⑤⑥⑦⑧⑨])/);
+      const seq=m?'①②③④⑤⑥⑦⑧⑨'.indexOf(m[1])+1:idx+1;
+      (imgMap[seq]||[]).forEach(im=>{
+        const img=document.createElement('img');
+        img.className='aimg'; img.src=im.src; img.alt=im.cap||'';
+        img.loading='lazy';
+        body.appendChild(img);
+        if(im.cap){
+          const cap=document.createElement('div');
+          cap.style.cssText='font-size:12.5px;color:var(--sub);text-align:center;margin:-4px 0 10px;';
+          cap.textContent=im.cap;
+          body.appendChild(cap);
+        }
+      });
+    });
+  }else{
+    body.textContent=it.t;
+  }
+  card.append(top,body); main.appendChild(card);
+});
+
+// 搜索
+qInput.addEventListener('focus',()=>{
+  setTimeout(()=>{ qInput.scrollIntoView({block:'start'}); window.scrollBy(0,-6); },50);
+});
+qInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); qInput.blur(); } });
+qInput.addEventListener('input',()=>{
+  const kw=qInput.value.trim().toLowerCase();
+  let hits=0;
+  document.querySelectorAll('.qcard').forEach(card=>{
+    const t=card.querySelector('.abody').textContent+card.querySelector('.qname').textContent;
+    const ok=!kw||t.toLowerCase().includes(kw);
+    card.style.display=ok?'':'none';
+    if(ok)hits++;
+  });
+  about.style.display=kw?'none':'';
+  emptyEl.style.display=hits?'none':'block';
+});
+
+function copyText(txt,btn){
+  const done=()=>{
+    btn.textContent='已复制 ✓'; btn.classList.add('ok');
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),1400);
+    setTimeout(()=>{btn.textContent='复制';btn.classList.remove('ok');},1600);
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(done).catch(()=>fallback(txt,done));
+  }else{ fallback(txt,done); }
+}
+function fallback(txt,done){
+  const ta=document.createElement('textarea');
+  ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');done();}catch(e){alert('复制失败，请长按手动选择');}
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
